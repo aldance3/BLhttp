@@ -1,14 +1,12 @@
-from typing import Optional
-
-from fastapi import FastAPI
+from fastapi import FastAPI, Form
 
 app = FastAPI()
 
-
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "FastAPI is running!"}
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
+@app.post("/submit")
+async def receive_from_roblox(value: str = Form(...)):
+    print(f"Received value from Roblox: {value}")
+    return {"received": value}
